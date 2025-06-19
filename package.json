@@ -5,12 +5,10 @@
     "main": "dist/index.js",
     "type": "module",
     "scripts": {
-        "build": "tsc",
+        "build": "rimraf build && tsc",
         "dev": "ts-node src/run_agent.ts",
-        "start": "node dist/run_agent.js",
         "start:stocks-server": "ts-node src/mcp_components/server/stocks_server.ts",
         "start:news-server": "ts-node src/mcp_components/server/news_server.ts",
-        "clean": "rimraf dist",
         "news:built": "node build/server/news-server.js",
         "stocks:built": "node --no-warnings  build/server/stocks-server.js",
         "start:built": "node build/agent/agent.js",

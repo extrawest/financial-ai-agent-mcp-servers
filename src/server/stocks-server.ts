@@ -89,13 +89,14 @@ mcp.addTool({
     },
 });
 
-// Start the server
+// Start the server with httpStream transport
 logger.info(
-    `Starting MCP server on 127.0.0.1:3000 with httpStream transport...`
+    `Starting STOCKS MCP server on 127.0.0.1:3000 with httpStream transport...`
 );
 await mcp.start({
     transportType: 'httpStream',
     httpStream: {
         port: 3000,
+        endpoint: '/sse',
     },
 });
