@@ -27,6 +27,7 @@ mcp.addTool({
         logger.info(`Fetching stock info for ${symbol}`);
         try {
             const quote = await yahooFinance.quote(symbol);
+            logger.info(`Stocks Result: ${JSON.stringify(quote, null, 2)}`);
             return JSON.stringify(quote, null, 2);
         } catch (error) {
             logger.error(`Error fetching stock info for ${symbol}: ${error}`);
@@ -52,6 +53,14 @@ mcp.addTool({
                     'cashflowStatementHistoryQuarterly',
                 ],
             });
+            logger.info(
+                `Stocks Quarterly Result: ${JSON.stringify(
+                    financials,
+                    null,
+                    2
+                )}`
+            );
+
             return JSON.stringify(financials, null, 2);
         } catch (error) {
             logger.error(
@@ -79,6 +88,9 @@ mcp.addTool({
                     'cashflowStatementHistory',
                 ],
             });
+            logger.info(
+                `Stocks Annual Result: ${JSON.stringify(financials, null, 2)}`
+            );
             return JSON.stringify(financials, null, 2);
         } catch (error) {
             logger.error(

@@ -14,10 +14,10 @@ interface ServerConfig {
 }
 
 export class AgentRunner {
-    private model: ChatOpenAI;
-    private agent: any | null = null;
-    private tools: MCPTool[] = [];
-    private clients: MCPClientWrapper[] = [];
+    model: ChatOpenAI;
+    agent: any | null = null;
+    tools: MCPTool[] = [];
+    clients: MCPClientWrapper[] = [];
 
     constructor(modelName: string = 'gpt-4') {
         this.model = new ChatOpenAI({
@@ -58,12 +58,55 @@ export class AgentRunner {
                     description: tool.description,
                     func: async (input: string) => {
                         try {
-                            const args = JSON.parse(input);
+                            console.log('TOOL EXECUTION START:', tool.name);
+                            console.log('Input:', input);
+
+                            // Parse input and structure it correctly
+                            let args;
+                            try {
+                                args = JSON.parse(input);
+                            } catch {
+                                // For stock-related tools, use 'symbol' as parameter name
+                                if (
+                                    tool.name.includes('stock') ||
+                                    tool.name.includes('financials')
+                                ) {
+                                    args = { symbol: input };
+                                } else {
+                                    args = { query: input }; // For news and other tools
+                                }
+                            }
+
+                            console.log('Processed args:', args);
+
+                            // Wrap args if not properly structured
+                            if (typeof args !== 'object') {
+                                if (
+                                    tool.name.includes('stock') ||
+                                    tool.name.includes('financials')
+                                ) {
+                                    args = { symbol: args };
+                                } else {
+                                    args = { query: args };
+                                }
+                            }
+
+                            console.log('Calling tool with args:', args);
                             const result = await tool.call(args);
-                            return typeof result === 'string'
-                                ? result
-                                : JSON.stringify(result);
+                            console.log('TOOL EXECUTION RESULT:', result);
+
+                            const finalResult =
+                                typeof result === 'string'
+                                    ? result
+                                    : JSON.stringify(result);
+                            console.log('TOOL EXECUTION END:', tool.name);
+                            return finalResult;
                         } catch (error) {
+                            console.error(
+                                'TOOL EXECUTION ERROR:',
+                                tool.name,
+                                error
+                            );
                             logger.error(
                                 `Error calling tool ${tool.name}:`,
                                 error
@@ -74,7 +117,10 @@ export class AgentRunner {
                 })
         );
 
-        // Create the agent
+        console.log(
+            'Creating agent with tools:',
+            langchainTools.map((t) => t.name)
+        );
         this.agent = createReactAgent({
             llm: this.model,
             tools: langchainTools,
@@ -90,19 +136,28 @@ export class AgentRunner {
             );
         }
 
-        logger.info(`Running query: ${query}`);
+        console.log('STARTING QUERY:', query);
 
         try {
+            console.log('Invoking agent...');
             const response = await this.agent.invoke({
                 messages: [{ role: 'human', content: query }],
             });
+            console.log('Agent invocation completed');
+
+            console.log('RAW RESPONSE FROM AGENT:');
+            console.log(response);
 
             // Extract the final message from the agent response
             const messages = response.messages || [];
             const lastMessage = messages[messages.length - 1];
 
+            console.log('FINAL MESSAGE:');
+            console.log(lastMessage?.content);
+
             return lastMessage?.content || 'No response generated';
         } catch (error) {
+            console.error('ERROR IN AGENT:', error);
             logger.error('Error processing query:', error);
             throw error;
         }

@@ -33,6 +33,7 @@ mcp.addTool({
                 language: 'en',
                 sortBy: 'relevancy',
             });
+            logger.info(`News Result: ${JSON.stringify(result, null, 2)}`);
             return JSON.stringify(result, null, 2);
         } catch (error) {
             logger.error(`Error fetching news for query "${query}": ${error}`);

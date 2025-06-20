@@ -30,11 +30,12 @@ async function runAgentWithMultipleServers(): Promise<void> {
 
         // Run the query
         const query =
-            'Summarize APL financials and analyze sentiment of recent news about the company';
+            'Summarize AAPL financials and analyze sentiment of recent news about the company';
         const response = await agentRunner.runQuery(query);
 
-        logger.info('\n=== LANGCHAIN AGENT RESPONSE ===');
-        logger.info(response);
+        logger.info('AGENT RESPONSE');
+        logger.info('Full response:', JSON.stringify(response, null, 2));
+        logger.info('Response content:', response);
     } catch (error) {
         logger.error(`Error running agent: ${error}`);
     } finally {
@@ -44,7 +45,6 @@ async function runAgentWithMultipleServers(): Promise<void> {
     logger.info('Agent runner completed');
 }
 
-// Run the agent
 if (import.meta.url === `file://${process.argv[1]}`) {
     runAgentWithMultipleServers().catch((error) => {
         logger.error(`Unhandled error: ${error}`);

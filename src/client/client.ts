@@ -14,10 +14,10 @@ export interface MCPTool {
 }
 
 export class MCPClientWrapper {
-    private serverUrl: string;
-    private client: Client | null = null;
-    private tools: MCPTool[] = [];
-    private connected = false;
+    serverUrl: string;
+    client: Client | null = null;
+    tools: MCPTool[] = [];
+    connected = false;
 
     constructor(serverUrl: string) {
         this.serverUrl = serverUrl;
