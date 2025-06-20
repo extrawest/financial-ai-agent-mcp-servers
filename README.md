@@ -7,6 +7,19 @@
 ![Version](https://img.shields.io/badge/version-1.0.0-blue)
 
 A TypeScript-based Ai agent with MCP integration. This project provides a unified interface to access financial market information and relevant news articles through MCP servers with tool calling.
+## DEMO
+
+### Terminal
+https://github.com/user-attachments/assets/2c3fc540-87e7-4714-afe2-885b7735aee4
+
+
+### Cursor
+https://github.com/user-attachments/assets/2cfa1597-caea-4465-85b9-4b547dde51e6
+
+
+
+
+
 
 ## ✨ Features
 
