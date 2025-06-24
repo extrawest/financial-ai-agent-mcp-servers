@@ -49,8 +49,8 @@ https://github.com/user-attachments/assets/2cfa1597-caea-4465-85b9-4b547dde51e6
 Clone and set up the project:
 
 ```bash
-git clone <your-repository-url>
-cd  mcp-servers
+git clone https://github.com/extrawest/financial-ai-agent-mcp-servers
+cd  financial-ai-agent-mcp-servers
 
 # Install dependencies
 npm install
