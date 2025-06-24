@@ -10,14 +10,13 @@ A TypeScript-based Ai agent with MCP integration. This project provides a unifie
 ## DEMO
 
 ### Terminal
-https://github.com/user-attachments/assets/2c3fc540-87e7-4714-afe2-885b7735aee4
+
+https://github.com/user-attachments/assets/47150b98-0663-43f6-927e-f09abb796fe6
 
 
 ### Cursor
-https://github.com/user-attachments/assets/2cfa1597-caea-4465-85b9-4b547dde51e6
 
-
-
+https://github.com/user-attachments/assets/72210b49-dc23-4bef-b7ee-6d289ede59e1
 
 
 
